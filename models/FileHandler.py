@@ -34,9 +34,9 @@ class FileHandler:
 
     async def async_write_csv(self, tasks):
         buffer = io.StringIO()
-        writer = csv.DictWriter(buf, fieldnames=["id", "title", "priority", "status"])
+        writer = csv.DictWriter(buffer, fieldnames=["id", "title", "priority", "status"])
         writer.writeheader()
         for t in tasks:
             writer.writerow(t.to_dict())
         async with aiofiles.open(self.csv_path, "w") as f:
-            await f.write(buf.getvalue())
+            await f.write(buffer.getvalue())
